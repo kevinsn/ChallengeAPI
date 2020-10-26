@@ -318,6 +318,10 @@ function searchContacts() {
         // name = this.resultado.value[0].Name;
       })
       .catch(error => console.error(error));
+    
+    $('document').ready(function () {
+      $('#amount').val(0)
+    })
   }
 }
 
@@ -328,8 +332,9 @@ function searchDeals() {
 
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
-                           "<th style='width: 15%;' scope='col'>ID</th>" +
-                           "<th style='width: 40%;' scope='col'>Título da Negociação</th>" +
+                           "<th style='width: 10%;' scope='col'>ID</th>" +
+                           "<th style='width: 35%;' scope='col'>Título da Negociação</th>" +
+                           "<th style='width: 10%;' scope='col'>Valor</th>" +
                            "<th style='width: 10%;' scope='col'>Status</th>" +
                            "<th style='width: 35%;' scope='col'></th>" +
                            "</tr>" +
@@ -365,14 +370,16 @@ function searchDeals() {
               break;
             case 3: 
               dealStatus = "Perdida";
-              break;
-              
+              break;              
           }
 
           tbodyContact.innerHTML += "<tr>" + 
                                     "<th scope='row'>" + this.resultado.value[i].Id + " " + 
                                     "</th>" +
                                     "<td>" + this.resultado.value[i].Title +
+                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "</td>" +
+                                    "<td>" + this.resultado.value[i].Amount +
                                     // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
                                     "</td>" +
                                     "<td>" + dealStatus +
@@ -428,8 +435,13 @@ function searchExistingDeal() {
       // $('#dealTitle').val($(this).data(this.resultado.value[0].Title));
       // $('#amount').val($(this).data(this.resultado.value[0].Amount));
       
-      editDealTitle = this.resultado.value[0].Title;
-      editAmount = this.resultado.value[0].Amount;
+      for (var i = 0; i < this.resultado.value.length; i++) {
+        if (this.resultado.value[i].Id == dataTableId){         
+          editDealTitle = this.resultado.value[i].Title;
+          editAmount = this.resultado.value[i].Amount;
+        }
+      }      
+
       // document.getElementById('dealTitle').innerHTML = "Titulo placeholder";
       // document.getElementById('amount').innerHTML = 10;
       // document.getElementById('modalDealLabel').innerHTML = "Editar Negócio";    
@@ -437,7 +449,7 @@ function searchExistingDeal() {
       $('document').ready(function () {
         $('#editDealTitle').val(editDealTitle);
         $('#editAmount').val(editAmount)
-     })
+      })
       // $('#modalDeal').modal('show');
     })
     .catch(error => console.error(error));
@@ -545,7 +557,7 @@ function editDeal() {
       // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
-          // document.location.reload(); 
+          document.location.reload(); 
         }
       }, 1000);
     })
