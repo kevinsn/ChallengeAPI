@@ -3,7 +3,7 @@ const users = '/Users';
 const contacts = '/Contacts';
 const deals = '/Deals';
 const tasks = '/Tasks';
-const interationRecords = '/InterationRecords';    
+const interactionRecords = '/InteractionRecords';    
 var dataTableId;
 var contactType;
 var uk;
@@ -286,8 +286,8 @@ function searchContacts() {
                                     // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     // "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
                                     // "</button> &nbsp;" +
-                                    "<button id='btnHistory' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalHistory' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-history'></i> Histórico " +
+                                    "<button id='btnInteractionRecords' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalInteractionRecords' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<i class='fas fa-history'></i> Registrar Histórico " +
                                     "</button>" +
                                     "</td>" +
                                     "</tr>"
@@ -549,6 +549,48 @@ function winDeal() {
   }
 
   axios.post(url + deals + "(" + dataTableId + ")" +  "/Win", deal, {
+    headers: {
+      'User-Key': sessionStorage.getItem("userKey"),
+    }
+  })
+    .then(response => {
+      this.resultado = response.data;
+      console.log(this.resultado);     
+      // console.log(this.resultado.value[0].Name);     
+      // name = this.resultado.value[0].Name;
+      // alert(name);
+      
+      // window.onload = async function(){
+      //   document.getElementById('output').innerHTML = name;
+      // };
+      // setTimeout(() => {  
+      //   console.log("Dados encontrados, carregando na página."); 
+      //   writeName(name);
+      //   name = this.resultado.value[1].Name;
+      //   writeName(name);
+  
+      // }, 5000);
+      setTimeout(() => {  
+        if (response.data != null)  {
+          document.location.reload(); 
+        }
+      }, 1000);
+    })
+    .catch(error => console.error(error));
+}
+
+function createInteractionRecords() {
+
+  // alert(document.getElementById('interactionType').value);
+
+  interactionRecord = {
+    "ContactId": dataTableId,
+    "Date": new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
+    "TypeId": document.getElementById('interactionType').value,
+    "Content": document.getElementById('interactionRecordText').value,
+  }
+
+  axios.post(url + interactionRecords, interactionRecord, {
     headers: {
       'User-Key': sessionStorage.getItem("userKey"),
     }
