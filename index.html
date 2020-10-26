@@ -45,8 +45,8 @@
       <i class="fas fa-user"></i> Criar Cliente
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalNaturalPerson()">Pessoa Física</a>
-      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalLegalEntity()">Pessoa Jurídica</a>
+      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalNaturalPerson()">Pessoa</a>
+      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalLegalEntity()">Empresa</a>
     </div>
   </div>
 
@@ -269,6 +269,26 @@
     </div>
   </div>
 
+  <div id="modalReopenTask" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalReopenTaskLabel">Reabrir Tarefa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>     
+        <div class="modal-body">
+          <p>Deseja realmente reabrir esta tarefa?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="reopenTask()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
   <div id="modalWinDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -279,7 +299,7 @@
           </button>
         </div>     
         <div class="modal-body">
-          <p>Deseja ganhar este negociação?</p>
+          <p>Deseja alterar o status dessa negociação?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>

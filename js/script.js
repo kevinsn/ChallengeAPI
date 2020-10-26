@@ -166,9 +166,16 @@ function createContact() {
 }
 
 function createDeal() {
+  var amountCurrencyReal = document.getElementById('amount').value;
+  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".")
+  if (amountCurrencyReal == null || amountCurrencyReal == ""){
+    amountCurrencyReal = 0;
+  }
+
+  // alert(amountCurrencyReal);
   deal = {
     "Title": document.getElementById('dealTitle').value,
-    "Amount": document.getElementById('amount').value,
+    "Amount": amountCurrencyReal,
     "ContactId": dataTableId,
     "StageId": 0,
     "OtherProperties": [
@@ -273,8 +280,8 @@ function searchContacts() {
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
                            "<th style='width: 10%;' scope='col'>ID</th>" +
-                           "<th style='width: 43%;' scope='col'>Nome do Cliente</th>" +
-                           "<th style='width: 12%;' scope='col'>Tipo de Cliente</th>" +
+                           "<th style='width: 45%;' scope='col'>Nome do Cliente</th>" +
+                           "<th style='width: 10%;' scope='col'>Tipo de Cliente</th>" +
                            "<th style='width: 35%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
@@ -328,10 +335,6 @@ function searchContacts() {
         // name = this.resultado.value[0].Name;
       })
       .catch(error => console.error(error));
-    
-    $('document').ready(function () {
-      $('#amount').val(0)
-    })
   }
 }
 
@@ -344,9 +347,9 @@ function searchDeals() {
                            "<tr>" +
                            "<th style='width: 10%;' scope='col'>ID</th>" +
                            "<th style='width: 35%;' scope='col'>Título da Negociação</th>" +
-                           "<th style='width: 10%;' scope='col'>Valor</th>" +
-                           "<th style='width: 10%;' scope='col'>Status</th>" +
-                           "<th style='width: 35%;' scope='col'></th>" +
+                           "<th style='width: 8%;' scope='col'>Valor</th>" +
+                           "<th style='width: 7%;' scope='col'>Status</th>" +
+                           "<th style='width: 40%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
                            "<tbody id='tbodyContact'>" +                           
@@ -474,9 +477,9 @@ function searchTasks() {
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
                            "<th style='width: 10%;' scope='col'>ID</th>" +
-                           "<th style='width: 45%;' scope='col'>Título da Tarefa</th>" +
+                           "<th style='width: 55%;' scope='col'>Título da Tarefa</th>" +
                            "<th style='width: 10%;' scope='col'>Finalizada?</th>" +
-                           "<th style='width: 35%;' scope='col'></th>" +
+                           "<th style='width: 25%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
                            "<tbody id='tbodyContact'>" +                           
@@ -497,11 +500,20 @@ function searchTasks() {
     
         for (var i = 0; i < this.resultado.value.length; i++) {
           var isFinished;
+          var modalType;
+          var btnFinishTask;
+          var btnIconFinishTask;
 
           if(this.resultado.value[i].Finished == true){    
             isFinished = "Sim";    
+            modalType = "#modalReopenTask";
+            btnFinishTask = "Reabrir Tarefa";
+            btnIconFinishTask = "lock-open";
           } else {
             isFinished = "Não";
+            modalType = "#modalFinishTask";
+            btnFinishTask = "Finalizar Tarefa";
+            btnIconFinishTask = "clipboard-check";
           }
           // console.log(this.resultado.value[i].Name);
           // data[i] = this.resultado.value[i].Name;
@@ -518,8 +530,8 @@ function searchTasks() {
                                     // "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     // "<i class='fas fa-coins'></i> Criar Negociação " +
                                     // "</button> &nbsp;" +
-                                    "<button id='finishTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalFinishTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-clipboard-check'></i> Finalizar Tarefa " +
+                                    "<button id='finishTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='" + modalType + "' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<i class='fas fa-" + btnIconFinishTask + "'></i> " + btnFinishTask + 
                                     "</button> &nbsp;" +
                                     // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     // "<i class='fas fa-history'></i> Histórico " +
@@ -535,9 +547,17 @@ function searchTasks() {
 
 function editDeal() {
   alert('here')
+  var amountCurrencyReal = document.getElementById('editAmount').value;
+  // alert(amountCurrencyRealEdit);
+  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".")  
+  // alert(amountCurrencyRealEdit);
+  if (amountCurrencyReal == null || amountCurrencyReal == ""){
+    amountCurrencyReal = 0;
+  }
+
   deal = {
     "Title": document.getElementById('editDealTitle').value,
-    "Amount": document.getElementById('editAmount').value,
+    "Amount": amountCurrencyReal,
     // "DealId": dataTableId,    
     "OtherProperties": [
         {
@@ -586,9 +606,17 @@ function editDeal() {
 }
 
 function finishTask() {
+  changeTaskStatus(true)
+}
+
+function reopenTask() {
+  changeTaskStatus(false)
+}
+
+function changeTaskStatus(isFinished) {
   task = {
     "Id": dataTableId,
-    "Finished": true,
+    "Finished": isFinished,
     "OtherProperties": [
         {
             "FieldKey": "{fieldKey}",
@@ -722,23 +750,3 @@ function createInteractionRecords() {
     })
     .catch(error => console.error(error));
 }
-
-// {
-//   "Id": 8787465,
-//   "ContactId": 9881654,
-//   "DealId": null,
-//   "Date": "2020-10-23T00:00:00-03:00",
-//   "Length": null,
-//   "TypeId": 1,
-//   "Content": "Negócio fechado.",
-//   "Latitude": null,
-//   "Longitude": null,
-//   "VerifiedCheckIn": false,
-//   "OriginalTaskId": null,
-//   "TotalVoiceCallId": null,
-//   "CreatorId": 83709,
-//   "UpdaterId": null,
-//   "LastUpdateDate": "2020-10-23T15:31:58.923-03:00",
-//   "CreateDate": "2020-10-23T15:31:58.923-03:00",
-//   "Editable": true
-// },
