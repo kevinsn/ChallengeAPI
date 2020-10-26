@@ -30,10 +30,10 @@
     </nav> -->
   
   <!-- Barra de navegação -->
-  <nav class="navbar navbar-expand navbar-light">
-    <a class="nav-link active" onclick="searchContacts()" href="#contacts">Clientes</a>
-    <a class="nav-link" onclick="searchDeals()" href="#deals">Negociações</a>
-    <a class="nav-link" onclick="searchTasks()" href="#tasks">Tarefas</a>
+  <nav id="navBar" class="navbar navbar-expand navbar-light">
+    <a class="nav-link active" data-toggle="tab" onclick="searchContacts()" href="#contacts">Clientes</a>
+    <a class="nav-link" data-toggle="tab" onclick="searchDeals()" href="#deals">Negociações</a>
+    <a class="nav-link" data-toggle="tab" onclick="searchTasks()" href="#tasks">Tarefas</a>
     <!-- <a class="nav-link" href="#interactionRecords">Histórico</a> -->
   </nav>
 
@@ -333,7 +333,7 @@
 
   <!-- Tabela -->
   <table id="tableContact" class="table">
-    <thead class="thead-dark">
+    <!-- <thead class="thead-dark">
       <tr>
         <th style="width: 17%;" scope="col">ID</th>
         <th style="width: 48%;" scope="col">Nome</th>
@@ -341,7 +341,7 @@
       </tr>
     </thead>
     <tbody id="tbodyContact">      
-    </tbody>
+    </tbody> -->
   </table>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -17,7 +17,17 @@ var task = {};
 // No load verifica se está autorizado e userKey não é nula, se sim procura contatos
 $(window).on('load',function(){
   if (sessionStorage.getItem("authorized") == "true" && sessionStorage.getItem("userKey") != null) {    
-    searchContacts();
+    switch (sessionStorage.getItem("actualTab")){
+      case "contacts":
+        searchContacts();
+        break;
+      case "deals":
+        searchDeals();
+        break;
+      case "tasks":
+        searchTasks();
+        break;
+    }    
   } else {
     $('#modalLogin').modal('show');  
   }
@@ -256,9 +266,22 @@ function createTask() {
 }
 
 function searchContacts() {      
+  sessionStorage.setItem("actualTab", "contacts"); 
+
+  var tableContact = document.getElementById('tableContact');
+
+  tableContact.innerHTML = "<thead class='thead-dark'>" +
+                           "<tr>" +
+                           "<th style='width: 17%;' scope='col'>ID</th>" +
+                           "<th style='width: 48%;' scope='col'>Nome do Cliente</th>" +
+                           "<th style='width: 35%;' scope='col'></th>" +
+                           "</tr>" +
+                           "</thead>" +
+                           "<tbody id='tbodyContact'>" +                           
+                           "</tbody>";
+
   var tbodyContact = document.getElementById('tbodyContact');
 
-  tbodyContact.innerHTML = "";
   if (sessionStorage.getItem("authorized") == "true") {
     axios.get(url + contacts, {
       headers: {
@@ -290,7 +313,7 @@ function searchContacts() {
                                     "<i class='fas fa-history'></i> Registrar Histórico " +
                                     "</button>" +
                                     "</td>" +
-                                    "</tr>"
+                                    "</tr>";
         }     
         // name = this.resultado.value[0].Name;
       })
@@ -299,9 +322,24 @@ function searchContacts() {
 }
 
 function searchDeals() {  
+  sessionStorage.setItem("actualTab", "deals"); 
+
+  var tableContact = document.getElementById('tableContact');
+
+  tableContact.innerHTML = "<thead class='thead-dark'>" +
+                           "<tr>" +
+                           "<th style='width: 15%;' scope='col'>ID</th>" +
+                           "<th style='width: 40%;' scope='col'>Título da Negociação</th>" +
+                           "<th style='width: 10%;' scope='col'>Status</th>" +
+                           "<th style='width: 35%;' scope='col'></th>" +
+                           "</tr>" +
+                           "</thead>" +
+                           "<tbody id='tbodyContact'>" +                           
+                           "</tbody>";
+
   var tbodyContact = document.getElementById('tbodyContact');
 
-  tbodyContact.innerHTML = "";
+  // "StatusId": 2,
   if (sessionStorage.getItem("authorized") == "true") {
     axios.get(url + deals, {
       headers: {
@@ -316,10 +354,28 @@ function searchDeals() {
           // console.log(this.resultado.value[i].Name);
           // data[i] = this.resultado.value[i].Name;
           // console.log(data[i]);      
+          var dealStatus;
+
+          switch(this.resultado.value[i].StatusId){
+            case 1: 
+              dealStatus = "Em aberto";
+              break;
+            case 2: 
+              dealStatus = "Ganha";
+              break;
+            case 3: 
+              dealStatus = "Perdida";
+              break;
+              
+          }
+
           tbodyContact.innerHTML += "<tr>" + 
                                     "<th scope='row'>" + this.resultado.value[i].Id + " " + 
                                     "</th>" +
                                     "<td>" + this.resultado.value[i].Title +
+                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "</td>" +
+                                    "<td>" + dealStatus +
                                     // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
                                     "</td>" +
                                     "<td>" +
@@ -389,9 +445,22 @@ function searchExistingDeal() {
 }
 
 function searchTasks() {
+  sessionStorage.setItem("actualTab", "tasks"); 
+
+  var tableContact = document.getElementById('tableContact');
+
+  tableContact.innerHTML = "<thead class='thead-dark'>" +
+                           "<tr>" +
+                           "<th style='width: 17%;' scope='col'>ID</th>" +
+                           "<th style='width: 48%;' scope='col'>Título da Tarefa</th>" +
+                           "<th style='width: 35%;' scope='col'></th>" +
+                           "</tr>" +
+                           "</thead>" +
+                           "<tbody id='tbodyContact'>" +                           
+                           "</tbody>";
+
   var tbodyContact = document.getElementById('tbodyContact');
 
-  tbodyContact.innerHTML = "";
   if (sessionStorage.getItem("authorized") == "true") {
     axios.get(url + tasks, {
       headers: {
