@@ -27,6 +27,9 @@ $(window).on('load',function(){
       case "tasks":
         searchTasks();
         break;
+      case "interactionRecords":
+        searchInteractionRecords();
+        break;
     }    
   } else {
     $('#modalLogin').modal('show');  
@@ -36,7 +39,7 @@ $(window).on('load',function(){
 // Valida userKey e autoriza usuário e vice-versa
 function validateUserKey() {
   uk = document.getElementById('userKey').value;
-  alert(uk);
+  // alert(uk);
 
   axios.get(url + contacts, {
     headers: {
@@ -47,8 +50,7 @@ function validateUserKey() {
       this.resultado = response.data;
       console.log(this.resultado);     
       sessionStorage.setItem("authorized", "true");    
-      alert(sessionStorage.getItem("authorized"));
-      
+      // alert(sessionStorage.getItem("authorized"));      
       storeUserKey();
 
     })
@@ -56,14 +58,13 @@ function validateUserKey() {
       console.error(error)},      
       sessionStorage.setItem("userKey", null),   
       sessionStorage.setItem("authorized", "false"),    
-      alert(sessionStorage.getItem("authorized")),
+      // alert(sessionStorage.getItem("authorized")),
     );
 }
 
 function storeUserKey() {
   sessionStorage.setItem("userKey", uk);    
-  alert(sessionStorage.getItem("userKey"));
-
+  // alert(sessionStorage.getItem("userKey"));
   searchContacts();
 }
 
@@ -93,8 +94,7 @@ $(document).ready(function() {
   $(document).on("click", "#tableContact #tbodyContact tr", function() {
       dataTableId = $(this).closest('tr').text().split(" ")[0];            
       console.log(dataTableId);
-      //text.split(" ")[0];
-      alert(dataTableId);
+      // alert(dataTableId);
   });
 });
 
@@ -142,20 +142,6 @@ function createContact() {
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-
-      // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -198,20 +184,7 @@ function createDeal() {
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
-      // }, 5000);
+
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -249,19 +222,7 @@ function createTask() {
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
+
       // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
@@ -308,14 +269,10 @@ function searchContacts() {
           } else {
             contactTypeId = "Pessoa";
           }
-          // console.log(this.resultado.value[i].Name);
-          // data[i] = this.resultado.value[i].Name;
-          // console.log(data[i]);      
           tbodyContact.innerHTML += "<tr>" + 
                                     "<th scope='row'>" + this.resultado.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Name +
-                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "<td>" + this.resultado.value[i].Name +                               
                                     "</td>" +
                                     "<td>" + contactTypeId +                                
                                     "</td>" +
@@ -323,16 +280,12 @@ function searchContacts() {
                                     "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-coins'></i> Criar Negociação " +
                                     "</button> &nbsp;" +
-                                    // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    // "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
-                                    // "</button> &nbsp;" +
                                     "<button id='btnInteractionRecords' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalInteractionRecords' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-history'></i> Registrar Histórico " +
                                     "</button>" +
                                     "</td>" +
                                     "</tr>";
         }     
-        // name = this.resultado.value[0].Name;
       })
       .catch(error => console.error(error));
   }
@@ -369,9 +322,6 @@ function searchDeals() {
         console.log(this.resultado); 
     
         for (var i = 0; i < this.resultado.value.length; i++) {
-          // console.log(this.resultado.value[i].Name);
-          // data[i] = this.resultado.value[i].Name;
-          // console.log(data[i]);      
           var dealStatus;
           var modalType;
           var btnFinishDeal;
@@ -401,17 +351,13 @@ function searchDeals() {
           tbodyContact.innerHTML += "<tr>" + 
                                     "<th scope='row'>" + this.resultado.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Title +
-                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "<td>" + this.resultado.value[i].Title +                                
                                     "</td>" +
-                                    "<td>" + this.resultado.value[i].Amount +
-                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "<td>" + this.resultado.value[i].Amount +                                 
                                     "</td>" +
-                                    "<td>" + dealStatus +
-                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "<td>" + dealStatus +                                  
                                     "</td>" +
                                     "<td>" +
-                                    // "<button id='btnEditDeal' class='btn btn-primary btn-xs' onclick='fillDealModal()' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<button id='btnEditDeal' onclick='searchExistingDeal()' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalEditDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-edit'></i> Editar Negociação " +
                                     "</button> &nbsp;" +
@@ -421,25 +367,20 @@ function searchDeals() {
                                     "<button id='btnCreateTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
                                     "</button> &nbsp;" +
-                                    // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    // "<i class='fas fa-history'></i> Histórico " +
-                                    // "</button>" +
                                     "</td>" +
-                                    "</tr>"
+                                    "</tr>";
         }     
-        // name = this.resultado.value[0].Name;
       })
       .catch(error => console.error(error));
   }
 }
 
 function searchExistingDeal() {
-  alert('cliquei no searchExistingDeal');
-  alert(dataTableId);
+  // alert('cliquei no searchExistingDeal');
+  // alert(dataTableId);
   
   if (sessionStorage.getItem("authorized") == "true") {
-    alert('IF no searchExistingDeal');
-    // axios.get(url + deals + "?$filter=Id+eq+3004329", {})
+    // alert('IF no searchExistingDeal');
     axios.get(url + deals, {
       headers: {
         'User-Key': sessionStorage.getItem("userKey"),
@@ -448,17 +389,10 @@ function searchExistingDeal() {
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);   
-      // name = this.resultado.value[0].Name;
 
       Object.keys(response.data).forEach(k => console.log(response.data[k]))
 
-      alert("tituto: " + this.resultado.value[0].Title + " valor: " + this.resultado.value[0].Amount);
-
-      // document.getElementById('dealTitle').innerHTML = this.resultado.value[0].Title;
-      // document.getElementById('amount').innerHTML = this.resultado.value[0].Amount;
-      
-      // $('#dealTitle').val($(this).data(this.resultado.value[0].Title));
-      // $('#amount').val($(this).data(this.resultado.value[0].Amount));
+      // alert("tituto: " + this.resultado.value[0].Title + " valor: " + this.resultado.value[0].Amount);
       
       for (var i = 0; i < this.resultado.value.length; i++) {
         if (this.resultado.value[i].Id == dataTableId){         
@@ -467,15 +401,11 @@ function searchExistingDeal() {
         }
       }      
 
-      // document.getElementById('dealTitle').innerHTML = "Titulo placeholder";
-      // document.getElementById('amount').innerHTML = 10;
-      // document.getElementById('modalDealLabel').innerHTML = "Editar Negócio";    
-      
       $('document').ready(function () {
         $('#editDealTitle').val(editDealTitle);
         $('#editAmount').val(editAmount)
       })
-      // $('#modalDeal').modal('show');
+
     })
     .catch(error => console.error(error));
   }
@@ -499,7 +429,6 @@ function searchTasks() {
 
   var tbodyContact = document.getElementById('tbodyContact');
 
-  // "Finished": true,
   if (sessionStorage.getItem("authorized") == "true") {
     axios.get(url + tasks, {
       headers: {
@@ -527,38 +456,96 @@ function searchTasks() {
             btnFinishTask = "Finalizar Tarefa";
             btnIconFinishTask = "clipboard-check";
           }
-          // console.log(this.resultado.value[i].Name);
-          // data[i] = this.resultado.value[i].Name;
-          // console.log(data[i]);      
+
           tbodyContact.innerHTML += "<tr>" + 
                                     "<th scope='row'>" + this.resultado.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Title +
-                                    // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "<td>" + this.resultado.value[i].Title +                                
                                     "</td>" +
                                     "<td>" + isFinished +                              
                                     "</td>" +
                                     "<td>" +
-                                    // "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    // "<i class='fas fa-coins'></i> Criar Negociação " +
-                                    // "</button> &nbsp;" +
                                     "<button id='finishTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='" + modalType + "' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-" + btnIconFinishTask + "'></i> " + btnFinishTask + 
                                     "</button> &nbsp;" +
-                                    // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    // "<i class='fas fa-history'></i> Histórico " +
-                                    // "</button>" +
                                     "</td>" +
                                     "</tr>";
         }     
-        // name = this.resultado.value[0].Name;
       })
       .catch(error => console.error(error));  
   }
 }
 
+function searchInteractionRecords() {  
+  sessionStorage.setItem("actualTab", "interactionRecords"); 
+
+  var tableContact = document.getElementById('tableContact');
+
+  tableContact.innerHTML = "<thead class='thead-dark'>" +
+                           "<tr>" +
+                           "<th style='width: 10%;' scope='col'>ID</th>" +
+                           "<th style='width: 13%;' scope='col'>Tipo</th>" +
+                           "<th style='width: 77%;' scope='col'>Conteúdo</th>" +
+                           "</tr>" +
+                           "</thead>" +
+                           "<tbody id='tbodyContact'>" +                           
+                           "</tbody>";
+
+  var tbodyContact = document.getElementById('tbodyContact');
+
+  if (sessionStorage.getItem("authorized") == "true") {
+    axios.get(url + interactionRecords, {
+      headers: {
+        'User-Key': sessionStorage.getItem("userKey"),
+      }
+    })
+      .then(response => {
+        this.resultado = response.data;
+        console.log(this.resultado); 
+    
+        for (var i = 0; i < this.resultado.value.length; i++) {
+          var interactionTypeId;
+
+          switch (this.resultado.value[i].TypeId){    
+            case 1:
+              interactionTypeId = "Simples";
+              break;  
+            case 2:
+              interactionTypeId = "Visita";
+              break;  
+            case 3:
+              interactionTypeId = "Telefone";
+              break;  
+            case 4:
+              interactionTypeId = "E-mail";
+              break;  
+            case 5:
+              interactionTypeId = "Reunião";
+              break;  
+            case 6:
+              interactionTypeId = "Conferência";
+              break;  
+            case 7:
+              interactionTypeId = "WhatsApp";
+              break;  
+          }
+
+          tbodyContact.innerHTML += "<tr>" + 
+                                    "<th scope='row'>" + this.resultado.value[i].Id + " " + 
+                                    "</th>" +
+                                    "<td>" + interactionTypeId +                                
+                                    "</td>" +
+                                    "<td>" + this.resultado.value[i].Content +                               
+                                    "</td>" +
+                                    "</tr>";
+        }     
+      })
+      .catch(error => console.error(error));
+  }
+}
+
 function editDeal() {
-  alert('here')
+  // alert('here')
   var amountCurrencyReal = document.getElementById('editAmount').value;
   // alert(amountCurrencyRealEdit);
   amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".")  
@@ -570,7 +557,6 @@ function editDeal() {
   deal = {
     "Title": document.getElementById('editDealTitle').value,
     "Amount": amountCurrencyReal,
-    // "DealId": dataTableId,    
     "OtherProperties": [
         {
             "FieldKey": "{fieldKey}",
@@ -587,27 +573,10 @@ function editDeal() {
     headers: {
       'User-Key': sessionStorage.getItem("userKey"),
     },
-    // params: {
-    //   'Id': dataTableId,
-    // }
   })
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
-      // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -648,21 +617,7 @@ function changeTaskStatus(isFinished) {
   })
     .then(response => {
       this.resultado = response.data;
-      console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
-      // }, 5000);
+      console.log(this.resultado);    
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -695,13 +650,10 @@ function finishDeal() {
 
 function changeStatusDeal(urlStatus) {  
 
-  alert(urlStatus);
-
-  // "FinishDate": "2020-10-25T19:26:29.86-03:00",
+  // alert(urlStatus);
   deal = {
     "Id": dataTableId,
     "FinishDate": new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
-    "ContactId": dataTableId,
     "OtherProperties": [
         {
             "FieldKey": "{fieldKey}",
@@ -722,20 +674,6 @@ function changeStatusDeal(urlStatus) {
     .then(response => {
       this.resultado = response.data;
       console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
-      // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -763,21 +701,8 @@ function createInteractionRecords() {
   })
     .then(response => {
       this.resultado = response.data;
-      console.log(this.resultado);     
-      // console.log(this.resultado.value[0].Name);     
-      // name = this.resultado.value[0].Name;
-      // alert(name);
-      
-      // window.onload = async function(){
-      //   document.getElementById('output').innerHTML = name;
-      // };
-      // setTimeout(() => {  
-      //   console.log("Dados encontrados, carregando na página."); 
-      //   writeName(name);
-      //   name = this.resultado.value[1].Name;
-      //   writeName(name);
-  
-      // }, 5000);
+      console.log(this.resultado);    
+
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 

@@ -5,39 +5,19 @@
   <title>Desafio Ploomes</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">    
-  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>  
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
   <script type="text/javascript" src="js/script.js"></script>	  
-
 </head>
-<body>
-  <!-- <div class="sidebar">
-    <a href="#contacts">Clientes</a>
-    <a href="#deals">Negociações</a>
-    <a href="#tasks">Tarefas</a>
-    <a href="#interactionRecords">Histórico</a>
-  </div> -->
-
-  <!-- <h1>Ploomes</h1>  
-    <nav class="nav flex-column">
-      <a class="nav-link active" href="#contacts">Clientes</a>
-      <a class="nav-link" href="#deals">Negociações</a>
-      <a class="nav-link" href="#tasks">Tarefas</a>
-      <a class="nav-link" href="#interactionRecords">Histórico</a>
-    </nav> -->
-  
+<body>  
   <!-- Barra de navegação -->
   <nav id="navBar" class="navbar navbar-expand navbar-light">
     <a class="nav-link active" data-toggle="tab" onclick="searchContacts()" href="#contacts">Clientes</a>
     <a class="nav-link" data-toggle="tab" onclick="searchDeals()" href="#deals">Negociações</a>
     <a class="nav-link" data-toggle="tab" onclick="searchTasks()" href="#tasks">Tarefas</a>
-    <!-- <a class="nav-link" href="#interactionRecords">Histórico</a> -->
+    <a class="nav-link" data-toggle="tab" onclick="searchInteractionRecords()" href="#interactionRecords">Histórico</a>
   </nav>
-
-  <!-- data-toggle="modal" data-target="#exampleModal" -->
   
   <!-- Botão de criar cliente -->
   <div class="dropdown">
@@ -380,17 +360,8 @@
 
   <br>
 
-  <!-- Tabela -->
   <table id="tableContact" class="table">
-    <!-- <thead class="thead-dark">
-      <tr>
-        <th style="width: 17%;" scope="col">ID</th>
-        <th style="width: 48%;" scope="col">Nome</th>
-        <th style="width: 35%;" scope="col"></th>
-      </tr>
-    </thead>
-    <tbody id="tbodyContact">      
-    </tbody> -->
+    <!-- Aqui será inserido o conteúdo das tabelas via .innerHTML -->
   </table>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
