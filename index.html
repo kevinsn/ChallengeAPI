@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio Ploomes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">    
+  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>  
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="./js/script.js"></script>	  
+
+</head>
+<body>
+  <!-- <div class="sidebar">
+    <a href="#contacts">Clientes</a>
+    <a href="#deals">Negociações</a>
+    <a href="#tasks">Tarefas</a>
+    <a href="#interactionRecords">Histórico</a>
+  </div> -->
+
+  <!-- <h1>Ploomes</h1>  
+    <nav class="nav flex-column">
+      <a class="nav-link active" href="#contacts">Clientes</a>
+      <a class="nav-link" href="#deals">Negociações</a>
+      <a class="nav-link" href="#tasks">Tarefas</a>
+      <a class="nav-link" href="#interactionRecords">Histórico</a>
+    </nav> -->
+  
+  <!-- Barra de navegação -->
+  <nav class="navbar navbar-expand navbar-light">
+    <a class="nav-link active" onclick="searchContacts()" href="#contacts">Clientes</a>
+    <a class="nav-link" onclick="searchDeals()" href="#deals">Negociações</a>
+    <a class="nav-link" onclick="searchTasks()" href="#tasks">Tarefas</a>
+    <!-- <a class="nav-link" href="#interactionRecords">Histórico</a> -->
+  </nav>
+
+  <!-- data-toggle="modal" data-target="#exampleModal" -->
+  
+  <!-- Botão de criar cliente -->
+  <div class="dropdown">
+    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="r.changeView('requests/edit/' + request.id)">
+      <i class="fas fa-user"></i> Criar Cliente
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalNaturalPerson()">Pessoa Física</a>
+      <a class="dropdown-item" data-toggle="modal" data-target="#modalContact" onclick="activateModalLegalEntity()">Pessoa Jurídica</a>
+    </div>
+  </div>
+
+  <!-- Abaido os modals (popups)    -->
+  <div id="modalLogin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLoginLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Chave de Usuário (User Key):</span>
+            </div>
+            <input id="userKey" type="text" class="form-control" placeholder="" aria-label="UserKey" aria-describedby="basic-addon1">
+          </div>          
+        </div>     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="validateUserKey()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalContact" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalContactLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Nome:</span>
+            </div>
+            <input id="name" type="text" class="form-control" placeholder="" aria-label="Name" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 input-legal-entity">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Razão Social:</span>
+            </div>
+            <input id="legalName" type="text" class="form-control" placeholder="" aria-label="LegalName" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Telefone:</span>
+            </div>
+            <input id="phone" type="text" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" placeholder="(00) 00000-0000" aria-label="Phone" aria-describedby="basic-addon1">            
+            <script type="text/javascript">$("#phone").mask("(00) 00000-0000");</script>
+          </div>
+          <div class="input-group mb-3 input-legal-entity">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Endereço:</span>
+            </div>
+            <input id="address" type="text" class="form-control" placeholder="" aria-label="Endereço" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 input-legal-entity">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Complemento:</span>
+            </div>
+            <input id="addressLine2" type="text" class="form-control" placeholder="" aria-label="AddressLine2" aria-describedby="basic-addon1">
+          </div>   
+          <div class="input-group mb-3 input-legal-entity">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Bairro:</span>
+            </div>
+            <input id="neighborhood" type="text" class="form-control" placeholder="" aria-label="Neighborhood" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >E-mail:</span>
+            </div>
+            <input id="email" type="email" class="form-control" placeholder="e-mail@e-mail.com" aria-label="Email" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 input-legal-entity">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Site:</span>
+            </div>
+            <input id="website" type="text" class="form-control" placeholder="" aria-label="Website" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3 input-natural-person">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Data de Nascimento:</span>
+            </div>
+            <input id="birthday" type="date" class="form-control" placeholder="" aria-label="Birthday" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Observações:</span>
+            </div>
+            <textarea id="note" class="form-control" aria-label="Note"></textarea>
+          </div>       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="createContact()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDealLabel">Novo Negócio</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Título:</span>
+            </div>
+            <input id="dealTitle" type="text" class="form-control" placeholder="" aria-label="DealTitle" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Valor:</span>
+            </div>
+            <input id="amount" type="text" class="form-control" placeholder="" aria-label="Amount" aria-describedby="basic-addon1">
+          </div>
+        </div>     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="createDeal()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalEditDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditDealLabel">Editar Negócio</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Título:</span>
+            </div>
+            <input id="editDealTitle" type="text" class="form-control" placeholder="" aria-label="editDealTitle" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Valor:</span>
+            </div>
+            <input id="editAmount" type="text" class="form-control" placeholder="" aria-label="editAmount" aria-describedby="basic-addon1">
+          </div>
+        </div>     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="editDeal()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalTask" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTaskLabel">Nova Tarefa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Título:</span>
+            </div>
+            <input id="taskTitle" type="text" class="form-control" placeholder="" aria-label="TaskTitle" aria-describedby="basic-addon1">
+          </div>     
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Descrição:</span>
+            </div>
+            <input id="description" type="text" class="form-control" placeholder="" aria-label="Description" aria-describedby="basic-addon1">
+          </div>       
+        </div>     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="createTask()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalFinishTask" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFinishTaskLabel">Finalizar Tarefa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>     
+        <div class="modal-body">
+          <p>Deseja realmente finalizar esta tarefa?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="finishTask()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalWinDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalWinDealLabel">Ganhar Negócio</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>     
+        <div class="modal-body">
+          <p>Deseja ganhar este negócio?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="winDeal()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Tabela -->
+  <table id="tableContact" class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th style="width: 17%;" scope="col">ID</th>
+        <th style="width: 48%;" scope="col">Nome</th>
+        <th style="width: 35%;" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="tbodyContact">      
+    </tbody>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
