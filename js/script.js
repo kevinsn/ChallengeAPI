@@ -6,8 +6,6 @@ const tasks = '/Tasks';
 const interationRecords = '/InterationRecords';    
 var dataTableId;
 var contactType;
-// var dealTitle;
-// var dealAmout;
 var uk;
 
 var contact = {};
@@ -16,6 +14,7 @@ var task = {};
 
 // alert(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString());
 
+// No load verifica se está autorizado e userKey não é nula, se sim procura contatos
 $(window).on('load',function(){
   if (sessionStorage.getItem("authorized") == "true" && sessionStorage.getItem("userKey") != null) {    
     searchContacts();
@@ -24,6 +23,7 @@ $(window).on('load',function(){
   }
 });
 
+// Valida userKey e autoriza usuário e vice-versa
 function validateUserKey() {
   uk = document.getElementById('userKey').value;
   alert(uk);
@@ -57,6 +57,7 @@ function storeUserKey() {
   searchContacts();
 }
 
+// Abaixo duas funções que mudam o tipo de pessoa, física e jurídica
 function activateModalNaturalPerson() {
   // alert("activateModalNaturalPerson");
   var countLegalEntity = document.getElementsByClassName("input-legal-entity");
@@ -77,6 +78,7 @@ function activateModalLegalEntity() {
   changeContactType("Empresa"); 
 }
 
+// Pega a ID do item da tabela
 $(document).ready(function() {
   $(document).on("click", "#tableContact #tbodyContact tr", function() {
       dataTableId = $(this).closest('tr').text().split(" ")[0];            
@@ -206,7 +208,7 @@ function createTask() {
   task = {
     "Title": document.getElementById('taskTitle').value,
     "Description": document.getElementById('description').value,
-    "DateTime": "2016-11-03T15:00:00",
+    "DateTime": new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
     // "ContactId": 0,    
     "DealId": dataTableId,
     // "Finished": ,
@@ -253,42 +255,6 @@ function createTask() {
     .catch(error => console.error(error));
 }
 
-function writeName(name){
-  document.getElementById('output').innerHTML += name + '<br>';
-}
-
-// axios.get(url + users, {
-//   headers: {
-//     'User-Key': uk,
-//   }
-// })
-//   .then(response => {
-//     this.resultado = response.data;
-//     console.log(this.resultado);     
-//     // console.log(this.resultado.value[0].Name);     
-//     name = this.resultado.value[0].Name;
-//     // alert(name);
-    
-//     // window.onload = async function(){
-//     //   document.getElementById('output').innerHTML = name;
-//     // };
-//     setTimeout(() => {  
-//       console.log("Dados encontrados, carregando na página."); 
-//       writeName(name);
-//       name = this.resultado.value[1].Name;
-//       writeName(name);
-
-//     }, 5000);
-//   })
-//   .catch(error => console.error(error));
-
-// axios.get('http://viacep.com.br/ws/81350000/json')
-//   .then(res => {
-//     this.resultado = res.data;
-//     console.log(this.resultado);
-//     console.log(this.resultado.bairro);
-//   });
-
 function searchContacts() {      
   var tbodyContact = document.getElementById('tbodyContact');
 
@@ -320,7 +286,7 @@ function searchContacts() {
                                     // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     // "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
                                     // "</button> &nbsp;" +
-                                    "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnHistory' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalHistory' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-history'></i> Histórico " +
                                     "</button>" +
                                     "</td>" +
@@ -359,10 +325,10 @@ function searchDeals() {
                                     "<td>" +
                                     // "<button id='btnEditDeal' class='btn btn-primary btn-xs' onclick='fillDealModal()' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<button id='btnEditDeal' onclick='searchExistingDeal()' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalEditDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-coins'></i> Editar Negociação " +
+                                    "<i class='fas fa-edit'></i> Editar Negociação " +
                                     "</button> &nbsp;" +
                                     "<button id='btnWinDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalWinDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-coins'></i> Ganhar Negociação " +
+                                    "<i class='fas fa-thumbs-up'></i> Ganhar Negociação " +
                                     "</button> &nbsp;" +
                                     "<button id='btnCreateTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
@@ -378,34 +344,6 @@ function searchDeals() {
       .catch(error => console.error(error));
   }
 }
-
-// function fillDealModal() {
-//   if (sessionStorage.getItem("authorized") == "true") {
-//     axios.get(url + deals, {
-//       headers: {
-//         'User-Key': sessionStorage.getItem("userKey"),
-//       },
-//       params: {
-//         'Id': dataTableId,
-//       }
-//     })
-//     .then(response => {
-//       this.resultado = response.data;
-//       console.log(this.resultado);   
-//       // name = this.resultado.value[0].Name;
-//     })
-//     .catch(error => console.error(error));
-//   }
-//   alert("tituto: " + this.resultado.value[0].Title + " valor: " + this.resultado.value[0].Amount);
-// }
-
-$(document).ready(function () {
-  // $(document).on("click", "#tableContact #tbodyContact tr", function() {
-  $(document).on("click", "#tableContact #tbodyContact tr", function() {
-    
-
-  });
-});
 
 function searchExistingDeal() {
   alert('cliquei no searchExistingDeal');
@@ -479,7 +417,7 @@ function searchTasks() {
                                     // "<i class='fas fa-coins'></i> Criar Negociação " +
                                     // "</button> &nbsp;" +
                                     "<button id='finishTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalFinishTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-thumbtack'></i> Finalizar Tarefa " +
+                                    "<i class='fas fa-clipboard-check'></i> Finalizar Tarefa " +
                                     "</button> &nbsp;" +
                                     // "<button class='btn btn-primary btn-xs' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     // "<i class='fas fa-history'></i> Histórico " +
@@ -596,7 +534,8 @@ function winDeal() {
   // "FinishDate": "2020-10-25T19:26:29.86-03:00",
   deal = {
     "Id": dataTableId,
-    "FinishDate": new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),"ContactId": dataTableId,
+    "FinishDate": new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString(),
+    "ContactId": dataTableId,
     "OtherProperties": [
         {
             "FieldKey": "{fieldKey}",
@@ -639,3 +578,23 @@ function winDeal() {
     })
     .catch(error => console.error(error));
 }
+
+// {
+//   "Id": 8787465,
+//   "ContactId": 9881654,
+//   "DealId": null,
+//   "Date": "2020-10-23T00:00:00-03:00",
+//   "Length": null,
+//   "TypeId": 1,
+//   "Content": "Negócio fechado.",
+//   "Latitude": null,
+//   "Longitude": null,
+//   "VerifiedCheckIn": false,
+//   "OriginalTaskId": null,
+//   "TotalVoiceCallId": null,
+//   "CreatorId": 83709,
+//   "UpdaterId": null,
+//   "LastUpdateDate": "2020-10-23T15:31:58.923-03:00",
+//   "CreateDate": "2020-10-23T15:31:58.923-03:00",
+//   "Editable": true
+// },
