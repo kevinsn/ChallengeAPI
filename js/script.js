@@ -373,16 +373,28 @@ function searchDeals() {
           // data[i] = this.resultado.value[i].Name;
           // console.log(data[i]);      
           var dealStatus;
+          var modalType;
+          var btnFinishDeal;
+          var btnIconFinishDeal;
 
           switch(this.resultado.value[i].StatusId){
             case 1: 
               dealStatus = "Em aberto";
+              modalType = "#modalChangeStatusDeal";
+              btnFinishDeal = "Alterar Status";
+              btnIconFinishDeal = "question-circle";
               break;
             case 2: 
-              dealStatus = "Ganha";
+              dealStatus = "Ganha";              
+              modalType = "#modalReopenDeal";
+              btnFinishDeal = "Reabrir Negócio";              
+              btnIconFinishDeal = "lock-open";
               break;
             case 3: 
-              dealStatus = "Perdida";
+              dealStatus = "Perdida";              
+              modalType = "#modalReopenDeal";
+              btnFinishDeal = "Reabrir Negócio";
+              btnIconFinishDeal = "lock-open";
               break;              
           }
 
@@ -403,8 +415,8 @@ function searchDeals() {
                                     "<button id='btnEditDeal' onclick='searchExistingDeal()' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalEditDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-edit'></i> Editar Negociação " +
                                     "</button> &nbsp;" +
-                                    "<button id='btnWinDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalWinDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
-                                    "<i class='fas fa-thumbs-up'></i> Ganhar Negociação " +
+                                    "<button id='btnChangeStatusDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='"+ modalType +"' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<i class='fas fa-" + btnIconFinishDeal + "'></i> " + btnFinishDeal +
                                     "</button> &nbsp;" +
                                     "<button id='btnCreateTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
@@ -537,7 +549,7 @@ function searchTasks() {
                                     // "<i class='fas fa-history'></i> Histórico " +
                                     // "</button>" +
                                     "</td>" +
-                                    "</tr>"
+                                    "</tr>";
         }     
         // name = this.resultado.value[0].Name;
       })
@@ -660,7 +672,31 @@ function changeTaskStatus(isFinished) {
     .catch(error => console.error(error));
 }
 
-function winDeal() {
+function reopenDeal() {
+  var urlStatus = "/Reopen";  
+
+  changeStatusDeal(urlStatus);
+}
+
+function finishDeal() {
+  var urlStatus;
+
+  switch (document.getElementById("statusType").value){
+    case "2":
+      urlStatus = "/Win";
+      break;
+    case "3":
+      urlStatus = "/Lose";
+      break;
+  }
+
+  changeStatusDeal(urlStatus);
+}
+
+function changeStatusDeal(urlStatus) {  
+
+  alert(urlStatus);
+
   // "FinishDate": "2020-10-25T19:26:29.86-03:00",
   deal = {
     "Id": dataTableId,
@@ -678,7 +714,7 @@ function winDeal() {
     ]
   }
 
-  axios.post(url + deals + "(" + dataTableId + ")" +  "/Win", deal, {
+  axios.post(url + deals + "(" + dataTableId + ")" +  urlStatus, deal, {
     headers: {
       'User-Key': sessionStorage.getItem("userKey"),
     }

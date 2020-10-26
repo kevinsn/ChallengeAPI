@@ -289,21 +289,50 @@
     </div>
   </div>
 
-  <div id="modalWinDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+  <div id="modalChangeStatusDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalWinDealLabel">Ganhar Negociação</h5>
+          <h5 class="modal-title" id="modalChangeStatusDealLabel">Deseja alterar o status dessa negociação?</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>     
         <div class="modal-body">
-          <p>Deseja alterar o status dessa negociação?</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Status</label>
+            </div>
+            <select id="statusType" class="custom-select">
+              <option selected>Selecione uma opção:</option>
+              <option value="2">Ganha</option>
+              <option value="3">Perdida</option>            
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="winDeal()">Confirmar</button>
+          <button type="button" class="btn btn-primary" onclick="finishDeal()">Confirmar</button>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div id="modalReopenDeal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalReopenDealLabel">Deseja alterar o status dessa negociação?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>     
+        <div class="modal-body">
+          <p>Deseja realmente reabrir este negócio?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.reload()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="reopenDeal()">Confirmar</button>
         </div>   
       </div>
     </div>
