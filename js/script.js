@@ -272,8 +272,9 @@ function searchContacts() {
 
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
-                           "<th style='width: 17%;' scope='col'>ID</th>" +
-                           "<th style='width: 48%;' scope='col'>Nome do Cliente</th>" +
+                           "<th style='width: 10%;' scope='col'>ID</th>" +
+                           "<th style='width: 43%;' scope='col'>Nome do Cliente</th>" +
+                           "<th style='width: 12%;' scope='col'>Tipo de Cliente</th>" +
                            "<th style='width: 35%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
@@ -293,6 +294,13 @@ function searchContacts() {
         console.log(this.resultado); 
     
         for (var i = 0; i < this.resultado.value.length; i++) {
+          var contactTypeId;
+
+          if(this.resultado.value[i].TypeId == 1){    
+            contactTypeId = "Empresa";    
+          } else {
+            contactTypeId = "Pessoa";
+          }
           // console.log(this.resultado.value[i].Name);
           // data[i] = this.resultado.value[i].Name;
           // console.log(data[i]);      
@@ -301,6 +309,8 @@ function searchContacts() {
                                     "</th>" +
                                     "<td>" + this.resultado.value[i].Name +
                                     // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "</td>" +
+                                    "<td>" + contactTypeId +                                
                                     "</td>" +
                                     "<td>" +
                                     "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
@@ -463,8 +473,9 @@ function searchTasks() {
 
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
-                           "<th style='width: 17%;' scope='col'>ID</th>" +
-                           "<th style='width: 48%;' scope='col'>Título da Tarefa</th>" +
+                           "<th style='width: 10%;' scope='col'>ID</th>" +
+                           "<th style='width: 45%;' scope='col'>Título da Tarefa</th>" +
+                           "<th style='width: 10%;' scope='col'>Finalizada?</th>" +
                            "<th style='width: 35%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
@@ -473,6 +484,7 @@ function searchTasks() {
 
   var tbodyContact = document.getElementById('tbodyContact');
 
+  // "Finished": true,
   if (sessionStorage.getItem("authorized") == "true") {
     axios.get(url + tasks, {
       headers: {
@@ -484,6 +496,13 @@ function searchTasks() {
         console.log(this.resultado); 
     
         for (var i = 0; i < this.resultado.value.length; i++) {
+          var isFinished;
+
+          if(this.resultado.value[i].Finished == true){    
+            isFinished = "Sim";    
+          } else {
+            isFinished = "Não";
+          }
           // console.log(this.resultado.value[i].Name);
           // data[i] = this.resultado.value[i].Name;
           // console.log(data[i]);      
@@ -492,6 +511,8 @@ function searchTasks() {
                                     "</th>" +
                                     "<td>" + this.resultado.value[i].Title +
                                     // "<button class='btn'><i class='fas fa-edit'></i></button> " +                                    
+                                    "</td>" +
+                                    "<td>" + isFinished +                              
                                     "</td>" +
                                     "<td>" +
                                     // "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
