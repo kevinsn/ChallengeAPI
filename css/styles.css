@@ -1,0 +1,16 @@
+body {
+  background-color: whitesmoke;
+}
+
+.center {
+  margin: auto;
+  width: 90%;
+}
+
+.custom-nav-brand {
+  font-family: 'Teko', sans-serif; 
+}
+
+.custom-nav-link a {
+  font-family: 'Monda', sans-serif; 
+}

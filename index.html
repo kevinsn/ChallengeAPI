@@ -5,6 +5,9 @@
   <title>Desafio Ploomes</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">    
+  <link href="https://fonts.googleapis.com/css2?family=Monda&family=Teko:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
@@ -12,16 +15,40 @@
 </head>
 <body>  
   <!-- Barra de navegação -->
-  <nav id="navBar" class="navbar navbar-expand navbar-light">
+  <!-- <nav id="navBar" class="navbar navbar-expand navbar-light">
     <a class="nav-link active" data-toggle="tab" onclick="searchContacts()" href="#contacts">Clientes</a>
     <a class="nav-link" data-toggle="tab" onclick="searchDeals()" href="#deals">Negociações</a>
     <a class="nav-link" data-toggle="tab" onclick="searchTasks()" href="#tasks">Tarefas</a>
     <a class="nav-link" data-toggle="tab" onclick="searchInteractionRecords()" href="#interactionRecords">Histórico</a>
+  </nav> -->
+
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7C76F5;">
+    <a class="navbar-brand custom-nav-brand" style="font-family: 'Teko', sans-serif; color: black;">Desafio API Ploomes</a>
+    <button class="navbar-toggler" type="text" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" style="color: white;" data-toggle="tab" onclick="searchContacts()" href="#contacts">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" style="color:whitesmoke" data-toggle="tab" onclick="searchDeals()" href="#deals">Negociações</a>
+        </li>     
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" style="color:whitesmoke" data-toggle="tab" onclick="searchTasks()" href="#tasks">Tarefas</a>
+        </li>     
+        <li class="nav-item">
+          <a class="nav-link custom-nav-link" style="color:whitesmoke" data-toggle="tab" onclick="searchInteractionRecords()" href="#interactionRecords">Histórico</a>
+        </li>  
+      </ul>
+    </div>
   </nav>
-  
+
+  <br>
   <!-- Botão de criar cliente -->
-  <div class="dropdown">
-    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="r.changeView('requests/edit/' + request.id)">
+  <div class="dropdown center">
+    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" style="background-color: #43A82F; border-color: #39752D;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="r.changeView('requests/edit/' + request.id)">
       <i class="fas fa-user"></i> Criar Cliente
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -156,7 +183,8 @@
             <div class="input-group-prepend">
               <span class="input-group-text" >Valor:</span>
             </div>
-            <input id="amount" type="text" class="form-control" placeholder="" aria-label="Amount" aria-describedby="basic-addon1" required>
+            <input id="amount" type="text" class="form-control" placeholder="" aria-label="Amount" aria-describedby="basic-addon1">
+            <script type="text/javascript">$("#amount").mask('#.##0,00', {reverse: true});</script>
           </div>
         </div>     
         <div class="modal-footer">
@@ -188,6 +216,7 @@
               <span class="input-group-text" >Valor:</span>
             </div>
             <input id="editAmount" type="text" class="form-control" placeholder="" aria-label="editAmount" aria-describedby="basic-addon1">
+            <script type="text/javascript">$("#editAmount").mask('#.##0,00', {reverse: true});</script>
           </div>
         </div>     
         <div class="modal-footer">
@@ -359,10 +388,12 @@
   </div>
 
   <br>
-
-  <table id="tableContact" class="table">
-    <!-- Aqui será inserido o conteúdo das tabelas via .innerHTML -->
-  </table>
+  
+  <div class="center" style="border: 3px solid #5D5B75;">
+    <table id="tableContact" class="table">
+      <!-- Aqui será inserido o conteúdo das tabelas via .innerHTML -->
+    </table>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

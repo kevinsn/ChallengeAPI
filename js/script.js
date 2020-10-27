@@ -152,8 +152,8 @@ function createContact() {
 }
 
 function createDeal() {
-  var amountCurrencyReal = document.getElementById('amount').value;
-  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".")
+  var amountCurrencyReal = document.getElementById('amount').value.replace(".", "");
+  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".");
   if (amountCurrencyReal == null || amountCurrencyReal == ""){
     amountCurrencyReal = 0;
   }
@@ -277,10 +277,10 @@ function searchContacts() {
                                     "<td>" + contactTypeId +                                
                                     "</td>" +
                                     "<td>" +
-                                    "<button id='btnCreateDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnCreateDeal' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='#modalDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-coins'></i> Criar Negociação " +
                                     "</button> &nbsp;" +
-                                    "<button id='btnInteractionRecords' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalInteractionRecords' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnInteractionRecords' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='#modalInteractionRecords' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-history'></i> Registrar Histórico " +
                                     "</button>" +
                                     "</td>" +
@@ -299,10 +299,10 @@ function searchDeals() {
   tableContact.innerHTML = "<thead class='thead-dark'>" +
                            "<tr>" +
                            "<th style='width: 10%;' scope='col'>ID</th>" +
-                           "<th style='width: 35%;' scope='col'>Título da Negociação</th>" +
-                           "<th style='width: 8%;' scope='col'>Valor</th>" +
-                           "<th style='width: 7%;' scope='col'>Status</th>" +
-                           "<th style='width: 40%;' scope='col'></th>" +
+                           "<th style='width: 30%;' scope='col'>Título da Negociação</th>" +
+                           "<th style='width: 9%;' scope='col'>Valor</th>" +
+                           "<th style='width: 8%;' scope='col'>Status</th>" +
+                           "<th style='width: 43%;' scope='col'></th>" +
                            "</tr>" +
                            "</thead>" +
                            "<tbody id='tbodyContact'>" +                           
@@ -353,18 +353,18 @@ function searchDeals() {
                                     "</th>" +
                                     "<td>" + this.resultado.value[i].Title +                                
                                     "</td>" +
-                                    "<td>" + this.resultado.value[i].Amount +                                 
+                                    "<td>" + this.resultado.value[i].Amount.toFixed(2).replace(".",",") +                                 
                                     "</td>" +
                                     "<td>" + dealStatus +                                  
                                     "</td>" +
                                     "<td>" +
-                                    "<button id='btnEditDeal' onclick='searchExistingDeal()' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalEditDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnEditDeal' onclick='searchExistingDeal()' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='#modalEditDeal' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-edit'></i> Editar Negociação " +
                                     "</button> &nbsp;" +
-                                    "<button id='btnChangeStatusDeal' class='btn btn-primary btn-xs' data-toggle='modal' data-target='"+ modalType +"' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnChangeStatusDeal' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='"+ modalType +"' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-" + btnIconFinishDeal + "'></i> " + btnFinishDeal +
                                     "</button> &nbsp;" +
-                                    "<button id='btnCreateTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#modalTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='btnCreateTask' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='#modalTask' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-thumbtack'></i> Criar Tarefa " +
                                     "</button> &nbsp;" +
                                     "</td>" +
@@ -403,7 +403,7 @@ function searchExistingDeal() {
 
       $('document').ready(function () {
         $('#editDealTitle').val(editDealTitle);
-        $('#editAmount').val(editAmount)
+        $('#editAmount').val(editAmount.toFixed(2).toString().replace(".", ","));
       })
 
     })
@@ -465,7 +465,7 @@ function searchTasks() {
                                     "<td>" + isFinished +                              
                                     "</td>" +
                                     "<td>" +
-                                    "<button id='finishTask' class='btn btn-primary btn-xs' data-toggle='modal' data-target='" + modalType + "' ng-click='r.changeView('requests/edit/' + request.id)'>" +
+                                    "<button id='finishTask' class='btn btn-primary btn-xs' style='background-color: #48458F; border-color: #2E2C5C' data-toggle='modal' data-target='" + modalType + "' ng-click='r.changeView('requests/edit/' + request.id)'>" +
                                     "<i class='fas fa-" + btnIconFinishTask + "'></i> " + btnFinishTask + 
                                     "</button> &nbsp;" +
                                     "</td>" +
@@ -546,9 +546,9 @@ function searchInteractionRecords() {
 
 function editDeal() {
   // alert('here')
-  var amountCurrencyReal = document.getElementById('editAmount').value;
+  var amountCurrencyReal = document.getElementById('editAmount').value.replace(".", "");
   // alert(amountCurrencyRealEdit);
-  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".")  
+  amountCurrencyReal = amountCurrencyReal.toString().replace(",", ".");  
   // alert(amountCurrencyRealEdit);
   if (amountCurrencyReal == null || amountCurrencyReal == ""){
     amountCurrencyReal = 0;
