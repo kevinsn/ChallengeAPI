@@ -47,8 +47,8 @@ function validateUserKey() {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
       sessionStorage.setItem("authorized", "true");    
       // alert(sessionStorage.getItem("authorized"));      
       storeUserKey();
@@ -93,7 +93,7 @@ function activateModalLegalEntity() {
 $(document).ready(function() {
   $(document).on("click", "#tableContact #tbodyContact tr", function() {
       dataTableId = $(this).closest('tr').text().split(" ")[0];            
-      console.log(dataTableId);
+      // console.log(dataTableId);
       // alert(dataTableId);
   });
 });
@@ -140,8 +140,8 @@ function createContact() {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -182,8 +182,8 @@ function createDeal() {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
 
       setTimeout(() => {  
         if (response.data != null)  {
@@ -220,10 +220,9 @@ function createTask() {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
 
-      // }, 5000);
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -258,21 +257,21 @@ function searchContacts() {
       }
     })
       .then(response => {
-        this.resultado = response.data;
-        console.log(this.resultado); 
+        
+        // console.log(response.data); 
     
-        for (var i = 0; i < this.resultado.value.length; i++) {
+        for (var i = 0; i < response.data.value.length; i++) {
           var contactTypeId;
 
-          if(this.resultado.value[i].TypeId == 1){    
+          if(response.data.value[i].TypeId == 1){    
             contactTypeId = "Empresa";    
           } else {
             contactTypeId = "Pessoa";
           }
           tbodyContact.innerHTML += "<tr>" + 
-                                    "<th scope='row'>" + this.resultado.value[i].Id + " " + 
+                                    "<th scope='row'>" + response.data.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Name +                               
+                                    "<td>" + response.data.value[i].Name +                               
                                     "</td>" +
                                     "<td>" + contactTypeId +                                
                                     "</td>" +
@@ -318,16 +317,16 @@ function searchDeals() {
       }
     })
       .then(response => {
-        this.resultado = response.data;
-        console.log(this.resultado); 
+        
+        // console.log(response.data); 
     
-        for (var i = 0; i < this.resultado.value.length; i++) {
+        for (var i = 0; i < response.data.value.length; i++) {
           var dealStatus;
           var modalType;
           var btnFinishDeal;
           var btnIconFinishDeal;
 
-          switch(this.resultado.value[i].StatusId){
+          switch(response.data.value[i].StatusId){
             case 1: 
               dealStatus = "Em aberto";
               modalType = "#modalChangeStatusDeal";
@@ -337,23 +336,23 @@ function searchDeals() {
             case 2: 
               dealStatus = "Ganha";              
               modalType = "#modalReopenDeal";
-              btnFinishDeal = "Reabrir Negócio";              
+              btnFinishDeal = "Reabrir Negociação";              
               btnIconFinishDeal = "lock-open";
               break;
             case 3: 
               dealStatus = "Perdida";              
               modalType = "#modalReopenDeal";
-              btnFinishDeal = "Reabrir Negócio";
+              btnFinishDeal = "Reabrir Negociação";
               btnIconFinishDeal = "lock-open";
               break;              
           }
 
           tbodyContact.innerHTML += "<tr>" + 
-                                    "<th scope='row'>" + this.resultado.value[i].Id + " " + 
+                                    "<th scope='row'>" + response.data.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Title +                                
+                                    "<td>" + response.data.value[i].Title +                                
                                     "</td>" +
-                                    "<td>" + this.resultado.value[i].Amount.toFixed(2).replace(".",",") +                                 
+                                    "<td>" + response.data.value[i].Amount.toFixed(2).replace(".",",") +                                 
                                     "</td>" +
                                     "<td>" + dealStatus +                                  
                                     "</td>" +
@@ -387,17 +386,15 @@ function searchExistingDeal() {
       },
     })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);   
-
-      Object.keys(response.data).forEach(k => console.log(response.data[k]))
-
-      // alert("tituto: " + this.resultado.value[0].Title + " valor: " + this.resultado.value[0].Amount);
       
-      for (var i = 0; i < this.resultado.value.length; i++) {
-        if (this.resultado.value[i].Id == dataTableId){         
-          editDealTitle = this.resultado.value[i].Title;
-          editAmount = this.resultado.value[i].Amount;
+      // console.log(response.data);   
+
+      // alert("tituto: " + response.data.value[0].Title + " valor: " + response.data.value[0].Amount);
+      
+      for (var i = 0; i < response.data.value.length; i++) {
+        if (response.data.value[i].Id == dataTableId){         
+          editDealTitle = response.data.value[i].Title;
+          editAmount = response.data.value[i].Amount;
         }
       }      
 
@@ -436,16 +433,16 @@ function searchTasks() {
       }
     })
       .then(response => {
-        this.resultado = response.data;
-        console.log(this.resultado); 
+        
+        // console.log(response.data); 
     
-        for (var i = 0; i < this.resultado.value.length; i++) {
+        for (var i = 0; i < response.data.value.length; i++) {
           var isFinished;
           var modalType;
           var btnFinishTask;
           var btnIconFinishTask;
 
-          if(this.resultado.value[i].Finished == true){    
+          if(response.data.value[i].Finished == true){    
             isFinished = "Sim";    
             modalType = "#modalReopenTask";
             btnFinishTask = "Reabrir Tarefa";
@@ -458,9 +455,9 @@ function searchTasks() {
           }
 
           tbodyContact.innerHTML += "<tr>" + 
-                                    "<th scope='row'>" + this.resultado.value[i].Id + " " + 
+                                    "<th scope='row'>" + response.data.value[i].Id + " " + 
                                     "</th>" +
-                                    "<td>" + this.resultado.value[i].Title +                                
+                                    "<td>" + response.data.value[i].Title +                                
                                     "</td>" +
                                     "<td>" + isFinished +                              
                                     "</td>" +
@@ -500,13 +497,13 @@ function searchInteractionRecords() {
       }
     })
       .then(response => {
-        this.resultado = response.data;
-        console.log(this.resultado); 
+        
+        // console.log(response.data); 
     
-        for (var i = 0; i < this.resultado.value.length; i++) {
+        for (var i = 0; i < response.data.value.length; i++) {
           var interactionTypeId;
 
-          switch (this.resultado.value[i].TypeId){    
+          switch (response.data.value[i].TypeId){    
             case 1:
               interactionTypeId = "Simples";
               break;  
@@ -531,11 +528,11 @@ function searchInteractionRecords() {
           }
 
           tbodyContact.innerHTML += "<tr>" + 
-                                    "<th scope='row'>" + this.resultado.value[i].Id + " " + 
+                                    "<th scope='row'>" + response.data.value[i].Id + " " + 
                                     "</th>" +
                                     "<td>" + interactionTypeId +                                
                                     "</td>" +
-                                    "<td>" + this.resultado.value[i].Content +                               
+                                    "<td>" + response.data.value[i].Content +                               
                                     "</td>" +
                                     "</tr>";
         }     
@@ -575,8 +572,8 @@ function editDeal() {
     },
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -616,8 +613,8 @@ function changeTaskStatus(isFinished) {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);    
+      
+      // console.log(response.data);    
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -672,8 +669,8 @@ function changeStatusDeal(urlStatus) {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);     
+      
+      // console.log(response.data);     
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
@@ -700,9 +697,8 @@ function createInteractionRecords() {
     }
   })
     .then(response => {
-      this.resultado = response.data;
-      console.log(this.resultado);    
-
+      
+      // console.log(response.data);    
       setTimeout(() => {  
         if (response.data != null)  {
           document.location.reload(); 
